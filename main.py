@@ -3,9 +3,11 @@ from flask import render_template
 from pathlib import Path
 from pprint import pprint
 import json
+import os
 
 BOARD = {}
 FILEPATH = "/tmp/scoreboard"
+PORT = 5000
 
 app = Flask(__name__)
 
@@ -59,5 +61,7 @@ if __name__ == "__main__":
                     "strikes" : 0,
                     "outs" : 0,
                     "balls" : 0 }
-    
-    app.run(host='0.0.0.0')
+                    
+    if os.geteuid() == 0:
+        PORT = 80
+    app.run(host='0.0.0.0',port=PORT)
