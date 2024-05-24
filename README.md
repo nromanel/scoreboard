@@ -31,12 +31,12 @@ With that said, you'll need:
     - I still need to verify if this is actually doable. (Preventing breaking internet access on the device you're using to connect)
         -If it doesn't work I'll need to bundle the Bootstrap and Jquery libraries currently being called via CDN
     - I'm considering hosting a Public DNS entry that resolves to the RFC1918 Address the Rpi will have, to make it easier to connect
-1 Flask app serves a basic HTML file with javascript behind it to allow you to control the signage
+2 Flask app serves a basic HTML file with javascript behind it to allow you to control the signage
     - On load, the page will retrieve the current state of the board from the app
     - TBD: Insert Screenshot of HTML
-1 An endpoint '/board' expects you to POST a JSON object for each part of the signage
+3 An endpoint '/board' expects you to POST a JSON object for each part of the signage
    1 The object is then deconstructed into the relevent bits and pulsed out to the shift registers
-1 Upon each POST - the state is persisted to a file to prevent data loss in the event of any power loss in the middle of a game.
+4 Upon each POST - the state is persisted to a file to prevent data loss in the event of any power loss in the middle of a game.
 
 # Wiring
 
