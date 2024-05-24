@@ -10,7 +10,7 @@ This is still a work in progress. but the POC worked great!
 
 # Components
 
-While the original project above leveraged an Arduino, I skipped that step and levraged the GPIO Pins on a RaspberryPi directly.
+While the original project above leveraged an Arduino, I skipped that step and leveraged the GPIO Pins on a RaspberryPi directly.
 With that said, you'll need:
 
 - RaspberryPi
@@ -20,7 +20,7 @@ With that said, you'll need:
     - I used LED Strips cut to size purchased off ebay - [Like These](https://www.ebay.com/itm/283457840528?var=585286904293)
 - Power Supplies
     - You'll need a 12V DC powersupply that can power all of your LED's + Rpi.
-        - See below for how I perfomred my sizing
+        - See below for how I performed my sizing
         - I ended up going with [https://www.amazon.com/gp/product/B0CBS4KTZ9/](https://www.amazon.com/gp/product/B0CBS4KTZ9/)
     - You'll also need a 5V transformer to step down that 12V and power your Rpi as well as the shift registers themselves:
         - [https://www.amazon.com/dp/B01M03288J](https://www.amazon.com/dp/B01M03288J)
