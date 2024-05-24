@@ -108,7 +108,7 @@ def print_to_leds(board_data):
         
     #Send the score data in order
     count = 1
-    for data_to_send in [ inning, ao, at, ho, ht]
+    for data_to_send in [ inning, ao, at, ho, ht]:
     
         for i in numbers[data_to_send]:
             
