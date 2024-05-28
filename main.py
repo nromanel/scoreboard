@@ -75,11 +75,11 @@ def print_to_leds(board_data):
     #for i in [ board_data["balls"], board_data["outs"], board_data["strikes"]]:
     #    count_string = count_string + '{0:03b}'.format(((i*i)-i)+1)
     
-    if board_data["strike"] == 0:
+    if board_data["strikes"] == 0:
         count_string = "00"
-    elif board_data["strike"] == 1:
+    elif board_data["strikes"] == 1:
         count_string = "01"
-    elif board_data["strike"] == 2:
+    elif board_data["strikes"] == 2:
         count_string = "11"
         
     if board_data["outs"] == 0:
