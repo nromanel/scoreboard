@@ -6,26 +6,26 @@ import RPi.GPIO as GPIO
 import json
 import os
 
-# Setup RPi TPIC6B595N
 GPIO.setmode(GPIO.BOARD)
-DATAIN = 37  # serin
-LATCH = 33   # RCK
-CLOCK = 31   # SRCK
-CLEAR = 35   # SRCLR
-OE = 11      # Output Enable Low
+# Setup RPi TPIC6B595N
+            # VCC 5V - Pin 2
+DATAIN = 37 # SERIN - Pin 3
+            # Number Outputs - Pin 4-7
+            # SRCLR - Pin 8 - Always High - Give 5v
+            # OE - Pin 9 - Always Low - go to ground
+            # Ground - Pin 10/11
+LATCH = 33  # RCK - Pin 12
+CLOCK = 31  # SRCK - Pin 13
+            # Number Outputs - Pin 14-17
+            # SEROUT - Pin 18
 
 GPIO.setup(DATAIN, GPIO.OUT)
 GPIO.setup(CLOCK, GPIO.OUT)
 GPIO.setup(LATCH, GPIO.OUT)
-GPIO.setup(CLEAR, GPIO.OUT)
-GPIO.setup(OE, GPIO.OUT)
 
 GPIO.output(LATCH, False)    # Latch is used to output the saved data
-GPIO.output(CLEAR, True)     # Clear must always be true. False clears registers
-GPIO.output(OE, False)       # Output Enable speaks for itself. Must be False to display
 GPIO.output(CLOCK, False)    # Used to shift the value of DATAIN to the register
 GPIO.output(DATAIN, False)   # Databit to be shifted into the register
-
 BOARD = {}
 FILEPATH = "/tmp/scoreboard"
 PORT = 5000
@@ -70,6 +70,10 @@ def print_to_leds(board_data):
     
     #build Binary string for count
     count_string = ""
+    
+    #Formula X^2-x+1 will appropriately translate the integer to the needed binary value. But I might forget how that worked!
+    #for i in [ board_data["balls"], board_data["outs"], board_data["strikes"]]:
+    #    count_string = count_string + '{0:03b}'.format(((i*i)-i)+1)
     
     if board_data["strike"] == 0:
         count_string = "00"
