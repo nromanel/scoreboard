@@ -61,12 +61,12 @@ def print_to_leds(board_data):
     # Data has to be sent backwards (6->1)
     
     #Extract home score
-    ht, ho = divmod(board_data["home"], 10)
+    ht, ho = divmod(int(board_data["home"]), 10)
 
     #extract away score
-    at, ao = divmod(board_data["away"], 10)
+    at, ao = divmod(int(board_data["away"]), 10)
     
-    inning = board_data["inning"]
+    inning = int(board_data["inning"])
     
     #build Binary string for count
     count_string = ""
