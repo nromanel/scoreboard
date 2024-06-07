@@ -2,7 +2,7 @@ from flask import Flask, Response, request
 from flask import render_template 
 from pathlib import Path
 from pprint import pprint
-from time import sleep
+from time import
 import RPi.GPIO as GPIO
 import json
 import os
@@ -109,20 +109,22 @@ def print_to_leds(board_data):
         
     #Send the score data in order
     count = 1
-    GPIO.output(LATCH, False)
     for data_to_send in [ ht, ho, inning, count_string, at, ao]:
         
     	
         if count == 4:
                 #Send the count data first (its last) - since it doesnt leverage the lookup
             for i in count_string:
+                print(i)
                 #send data
                 GPIO.output(DATAIN, False if i == "0" else True)
                 #pulse clock line
                 GPIO.output(CLOCK, True)
                 GPIO.output(CLOCK, False)
+            print("done")
         else:
             for i in numbers[data_to_send]:
+                print(i)
                 #Hacky way of not prepending a 0 when the score is less then 10
                 if data_to_send == 0 and (count == 1 or count == 5):
                     GPIO.output(DATAIN, False)
@@ -133,6 +135,7 @@ def print_to_leds(board_data):
                 #pulse clock line
                 GPIO.output(CLOCK, True)
                 GPIO.output(CLOCK, False)
+            print("done")
         count = count + 1
    
     #set Latch high to finish data transfer
