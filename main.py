@@ -86,7 +86,7 @@ def print_to_leds(board_data):
         count_string = "11"
         
     if board_data["outs"] == 0:
-        count_string = "00" + count_string
+        count_string == "00" + count_string
     elif board_data["outs"] == 1:
         count_string == "01" + count_string
     elif board_data["outs"] == 2:
