@@ -2,6 +2,7 @@ from flask import Flask, Response, request
 from flask import render_template 
 from pathlib import Path
 from pprint import pprint
+from time import sleep
 import RPi.GPIO as GPIO
 import json
 import os
@@ -108,8 +109,10 @@ def print_to_leds(board_data):
         
     #Send the score data in order
     count = 1
+    GPIO.output(LATCH, False)
     for data_to_send in [ ht, ho, inning, count_string, at, ao]:
-    
+        
+    	
         if count == 4:
                 #Send the count data first (its last) - since it doesnt leverage the lookup
             for i in count_string:
