@@ -2,7 +2,7 @@ from flask import Flask, Response, request
 from flask import render_template 
 from pathlib import Path
 from pprint import pprint
-from time import
+from time import sleep
 import RPi.GPIO as GPIO
 import json
 import os
