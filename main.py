@@ -111,6 +111,7 @@ def print_to_leds(board_data):
         GPIO.output(DATAIN, False if i == "0" else True)
         #pulse clock line
         GPIO.output(CLOCK, True)
+        sleep(0.01)
         GPIO.output(CLOCK, False)
     GPIO.output(LATCH, True)
     return True
