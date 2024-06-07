@@ -105,6 +105,15 @@ def print_to_leds(board_data):
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
     
+    for i in count_string:
+        print(i)
+        #send data
+        GPIO.output(DATAIN, False if i == "0" else True)
+        #pulse clock line
+        GPIO.output(CLOCK, True)
+        GPIO.output(CLOCK, False)
+    GPIO.output(LATCH, True)
+    return True
 
         
     #Send the score data in order
