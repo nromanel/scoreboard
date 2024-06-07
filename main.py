@@ -108,10 +108,9 @@ def print_to_leds(board_data):
         
     #Send the score data in order
     count = 1
-    for data_to_send in [ ht, ho, innimg, count_string, at, ao]:
+    for data_to_send in [ ht, ho, inning, count_string, at, ao]:
     
-
-        if count = 4:
+        if count == 4:
                 #Send the count data first (its last) - since it doesnt leverage the lookup
             for i in count_string:
                 #send data
