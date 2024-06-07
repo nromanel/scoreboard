@@ -10,7 +10,7 @@ apt-get update;
 apt-get --assume-yes upgrade;
 
 #Install python
-apt-get --assume-yes install python3-pip
+apt-get --assume-yes install python3-pip git
 pip3 install RPi.GPIO flask
 
 #Hotspot

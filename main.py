@@ -46,13 +46,15 @@ numbers = [
 def print_to_leds(board_data):
     
     #Order of Chips
-    #1 - Home Score Ten's
-    #2 - Home Score One's
-    #3 - Away Score Ten's
-    #4 - Away Score One's
-    #5 - Inning
     
-    #6 - Counts (Strikes - Outs - Balls)
+    
+    #1 - Away Score One's
+    #2 - Away Score Ten's
+    #3 - Counts (Strikes - Outs - Balls)
+    #4 - Inning
+    #5 - Home Score One's
+    #6 - Home Score Ten's
+    
     ##### Output wiring for Counts:
     ##### Strikes: 1,2
     ##### Outs: 3,4
@@ -102,30 +104,33 @@ def print_to_leds(board_data):
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
     
-    #Send the count data first (its last) - since it doesnt leverage the lookup
-    for i in count_string:
-        #send data
-        GPIO.output(DATAIN, False if i == "0" else True)
-        #pulse clock line
-        GPIO.output(CLOCK, True)
-        GPIO.output(CLOCK, False)
+
         
     #Send the score data in order
     count = 1
-    for data_to_send in [ inning, ao, at, ho, ht]:
+    for data_to_send in [ ht, ho, innimg, count_string, at, ao]:
     
-        for i in numbers[data_to_send]:
-            
-            #Hacky way of not prepending a 0 when the score is less then 10
-            if data_to_send == 0 and (count == 2 or count == 4):
-                GPIO.output(DATAIN, False)
-            else:    
-            #send data
+
+        if count = 4:
+                #Send the count data first (its last) - since it doesnt leverage the lookup
+            for i in count_string:
+                #send data
                 GPIO.output(DATAIN, False if i == "0" else True)
-                
-            #pulse clock line
-            GPIO.output(CLOCK, True)
-            GPIO.output(CLOCK, False)
+                #pulse clock line
+                GPIO.output(CLOCK, True)
+                GPIO.output(CLOCK, False)
+        else:
+            for i in numbers[data_to_send]:
+                #Hacky way of not prepending a 0 when the score is less then 10
+                if data_to_send == 0 and (count == 1 or count == 5):
+                    GPIO.output(DATAIN, False)
+                else:    
+                #send data
+                    GPIO.output(DATAIN, False if i == "0" else True)
+                    
+                #pulse clock line
+                GPIO.output(CLOCK, True)
+                GPIO.output(CLOCK, False)
         count = count + 1
    
     #set Latch high to finish data transfer
