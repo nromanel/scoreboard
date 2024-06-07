@@ -86,20 +86,20 @@ def print_to_leds(board_data):
         count_string = "11"
         
     if board_data["outs"] == 0:
-        count_string == "00" + count_string
+        count_string = "00" + count_string
     elif board_data["outs"] == 1:
-        count_string == "01" + count_string
+        count_string = "01" + count_string
     elif board_data["outs"] == 2:
-        count_string == "11" + count_string
+        count_string = "11" + count_string
         
     if board_data["balls"] == 0:
-        count_string == "0000" + count_string
+        count_string = "0000" + count_string
     elif board_data["balls"] == 1:
-        count_string == "0001" + count_string
+        count_string = "0001" + count_string
     elif board_data["balls"] == 2:
-        count_string == "0011" + count_string
-    elif board_data["balls"] == 3:
-        count_string == "0111" +count_string
+        count_string = "0011" + count_string
+    elif board_data["blls"] == 3:
+        count_string = "0111" +count_string
         
 
     #set Latch low to start sending data
