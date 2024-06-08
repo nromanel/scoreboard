@@ -98,7 +98,7 @@ def print_to_leds(board_data):
         count_string = "0001" + count_string
     elif board_data["balls"] == 2:
         count_string = "0011" + count_string
-    elif board_data["blls"] == 3:
+    elif board_data["balls"] == 3:
         count_string = "0111" +count_string
         
 
