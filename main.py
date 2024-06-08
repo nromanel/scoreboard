@@ -105,7 +105,7 @@ def print_to_leds(board_data):
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
     
-    for i in int(ht):
+    for i in numbers[ht]:
         print(i)
         #send data
         GPIO.output(DATAIN, False if i == "0" else True)
