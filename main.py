@@ -82,36 +82,11 @@ def print_to_leds(board_data):
     
     inning = int(board_data["inning"])
     
-    #build Binary string for count
-    count_string = ""
-    
     #Formula X^2-x+1 will appropriately translate the integer to the needed binary value. But I might forget how that worked!
     #for i in [ board_data["balls"], board_data["outs"], board_data["strikes"]]:
     #    count_string = count_string + '{0:03b}'.format(((i*i)-i)+1)
     
-    if int(board_data["strikes"]) == 0:
-        count_string = "00"
-    elif int(board_data["strikes"]) == 1:
-        count_string = "01"
-    elif int(board_data["strikes"]) == 2:
-        count_string = "11"
-        
-    if int(board_data["outs"]) == 0:
-        count_string = "00" + count_string
-    elif int(board_data["outs"]) == 1:
-        count_string = "01" + count_string
-    elif int(board_data["outs"]) == 2:
-        count_string = "11" + count_string
-        
-    if int(board_data["balls"]) == 0:
-        count_string = "0000" + count_string
-    elif int(board_data["balls"]) == 1:
-        count_string = "0001" + count_string
-    elif int(board_data["balls"]) == 2:
-        count_string = "0011" + count_string
-    elif int(board_data["balls"]) == 3:
-        count_string = "0111" + count_string
-        
+    count_string = build_count_string(board_data)
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
 
@@ -169,35 +144,12 @@ def print_to_leds_chained(board_data):
     
     inning = int(board_data["inning"])
     
-    #build Binary string for count
-    count_string = ""
-    
+
     #Formula X^2-x+1 will appropriately translate the integer to the needed binary value. But I might forget how that worked!
     #for i in [ board_data["balls"], board_data["outs"], board_data["strikes"]]:
     #    count_string = count_string + '{0:03b}'.format(((i*i)-i)+1)
     
-    if int(board_data["strikes"]) == 0:
-        count_string = "00"
-    elif int(board_data["strikes"]) == 1:
-        count_string = "01"
-    elif int(board_data["strikes"]) == 2:
-        count_string = "11"
-        
-    if int(board_data["outs"]) == 0:
-        count_string = "00" + count_string
-    elif int(board_data["outs"]) == 1:
-        count_string = "01" + count_string
-    elif int(board_data["outs"]) == 2:
-        count_string = "11" + count_string
-        
-    if int(board_data["balls"]) == 0:
-        count_string = "0000" + count_string
-    elif int(board_data["balls"]) == 1:
-        count_string = "0001" + count_string
-    elif int(board_data["balls"]) == 2:
-        count_string = "0011" + count_string
-    elif int(board_data["balls"]) == 3:
-        count_string = "0111" + count_string
+    count_string = build_count_string(board_data)
         
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
@@ -263,7 +215,33 @@ def handle_data():
             
         #except:
         #    return Response(json.dumps({ "success" : False, "message" : "Unable to Parse Data" }, indent=4), mimetype='application/json')
+
+def build_count_string(board_data):
+    count_string = ""
+    if int(board_data["strikes"]) == 0:
+        count_string = "00"
+    elif int(board_data["strikes"]) == 1:
+        count_string = "01"
+    elif int(board_data["strikes"]) == 2:
+        count_string = "11"
         
+    if int(board_data["outs"]) == 0:
+        count_string = "00" + count_string
+    elif int(board_data["outs"]) == 1:
+        count_string = "01" + count_string
+    elif int(board_data["outs"]) == 2:
+        count_string = "11" + count_string
+        
+    if int(board_data["balls"]) == 0:
+        count_string = "0000" + count_string
+    elif int(board_data["balls"]) == 1:
+        count_string = "0001" + count_string
+    elif int(board_data["balls"]) == 2:
+        count_string = "0011" + count_string
+    elif int(board_data["balls"]) == 3:
+        count_string = "0111" + count_string
+    
+    return count_string
         
         
 def update_board(board_data):
