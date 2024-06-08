@@ -56,7 +56,8 @@ numbers = [
 ]
 
 def print_to_leds(board_data):
-    
+    print("Received Data:")
+    pprint(board_data)
     #Order of Chips
     
     
@@ -88,7 +89,6 @@ def print_to_leds(board_data):
     #Formula X^2-x+1 will appropriately translate the integer to the needed binary value. But I might forget how that worked!
     #for i in [ board_data["balls"], board_data["outs"], board_data["strikes"]]:
     #    count_string = count_string + '{0:03b}'.format(((i*i)-i)+1)
-    pprint(board_data)
     
     if board_data["strikes"] == 0:
         count_string = "00"
