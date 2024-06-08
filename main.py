@@ -39,7 +39,7 @@ GPIO.output(LATCH, False)    # Latch is used to output the saved data
 GPIO.output(CLOCK, False)    # Used to shift the value of DATAIN to the register
 
 BOARD = {}
-FILEPATH = "/tmp/scoreboard" + str(os.geteuid())
+FILEPATH = "/var/scoreboard/state" + str(os.geteuid())
 PORT = 5000
 
 numbers = [
