@@ -57,23 +57,6 @@ numbers = [
 ]
 
 def print_to_leds(board_data):
-    #Order of Chips
-    
-    
-    #1 - Away Score One's
-    #2 - Away Score Ten's
-    #3 - Counts (Strikes - Outs - Balls)
-    #4 - Inning
-    #5 - Home Score One's
-    #6 - Home Score Ten's
-    
-    ##### Output wiring for Counts:
-    ##### Strikes: 1,2
-    ##### Outs: 3,4
-    ##### Balls: 5,6,7
-    
-    # Data has to be sent backwards (6->1)
-    
     #Extract home score
     ht, ho = divmod(int(board_data["home"]), 10)
 
@@ -128,11 +111,6 @@ def print_to_leds_chained(board_data):
     #4 - Inning
     #5 - Home Score One's
     #6 - Home Score Ten's
-    
-    ##### Output wiring for Counts:
-    ##### Strikes: 1,2
-    ##### Outs: 3,4
-    ##### Balls: 5,6,7
     
     # Data has to be sent backwards (6->1)
     
@@ -217,6 +195,11 @@ def handle_data():
         #    return Response(json.dumps({ "success" : False, "message" : "Unable to Parse Data" }, indent=4), mimetype='application/json')
 
 def build_count_string(board_data):
+    ##### Output wiring for Counts:
+    ##### Strikes: 1,2
+    ##### Outs: 3,4
+    ##### Balls: 5,6,7
+    
     count_string = ""
     if int(board_data["strikes"]) == 0:
         count_string = "00"
