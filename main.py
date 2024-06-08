@@ -110,9 +110,9 @@ def print_to_leds(board_data):
     elif board_data["balls"] == 2:
         count_string = "0011" + count_string
     elif board_data["balls"] == 3:
-        count_string = "0111" +count_string
+        count_string = "0111" + count_string
         
-
+    print(count_string)
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
 
@@ -125,7 +125,7 @@ def print_to_leds(board_data):
         
         GPIO.output(DATA_HO, False if str(numbers[ho])[i] == "0" else True)
         GPIO.output(DATA_INNING, False if str(numbers[inning])[i] == "0" else True)
-        GPIO.output(DATA_COUNT, False if count_string[i] == "0" else True)
+        GPIO.output(DATA_COUNT, False if str(count_string)[i] == "0" else True)
         
         if at == 0:
             GPIO.output(DATA_AT, False)
