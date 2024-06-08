@@ -221,14 +221,12 @@ def update_board(board_data):
 if __name__ == "__main__": 
     
     scoreboard_file = Path(FILEPATH)
-    if scoreboard_file.is_file():
-        try:
-            f = open(FILEPATH)
-            BOARD = json.load(f)
-            f.close()
-        except:
-            pass
-    else:
+
+    try:
+        f = open(FILEPATH)
+        BOARD = json.load(f)
+        f.close()
+    except:
         BOARD = {   "inning" : 1,
                     "home" : 0,
                     "away" : 0,
