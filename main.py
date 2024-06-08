@@ -28,11 +28,16 @@ GPIO.setup(DATAIN, GPIO.OUT)
 GPIO.setup(DATAHT, GPIO.OUT)
 GPIO.setup(CLOCK, GPIO.OUT)
 GPIO.setup(LATCH, GPIO.OUT)
+GPIO.setup(CLOCKHT, GPIO.OUT)
+GPIO.setup(LATCHHT, GPIO.OUT)
 
 GPIO.output(LATCH, False)    # Latch is used to output the saved data
 GPIO.output(CLOCK, False)    # Used to shift the value of DATAIN to the register
 GPIO.output(DATAIN, False)   # Databit to be shifted into the register
 GPIO.output(DATAHT, False) 
+GPIO.output(LATCHHT, False)    # Latch is used to output the saved data
+GPIO.output(CLOCKHT, False)  
+
 BOARD = {}
 FILEPATH = "/tmp/scoreboard" + str(os.geteuid())
 PORT = 5000
