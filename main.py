@@ -10,6 +10,7 @@ import os
 GPIO.setmode(GPIO.BOARD)
 # Setup RPi TPIC6B595N
 
+DATAIN = 37
 DATA_HT = 15
 DATA_HO = 13
 DATA_INNING = 11
@@ -28,7 +29,7 @@ CLOCK = 31  # SRCK - Pin 13
             # Number Outputs - Pin 14-17
             # SEROUT - Pin 18
 
-for i in [ DATA_HT, DATA_HO, DATA_INNING, DATA_COUNT, DATA_AT, DATA_AO]:
+for i in [ DATA_IN, DATA_HT, DATA_HO, DATA_INNING, DATA_COUNT, DATA_AT, DATA_AO]:
     GPIO.setup(i, GPIO.OUT)
     GPIO.output(i, False)
     
@@ -139,47 +140,106 @@ def print_to_leds(board_data):
         GPIO.output(CLOCK, False)
         sleep(0.001)
 
-    #Send the score data in order
-    #count = 1
-    #for data_to_send in [ ht, ho, inning, count_string, at, ao]:
-    #    
-    #	
-    #    if count == 4:
-    #            #Send the count data first (its last) - since it doesnt leverage the lookup
-    #        for i in count_string:
-    #            print(i)
-    #            #send data
-    #            GPIO.output(DATAIN, False if i == "0" else True)
-    #            #pulse clock line
-    #            sleep(0.001)
-    #            GPIO.output(CLOCK, True)
-    #            sleep(0.001)
-    #            GPIO.output(CLOCK, False)
-    #            sleep(0.001)
-    #        print("done")
-    #    else:
-    #        for i in numbers[data_to_send]:
-    #            print(i)
-    #            #Hacky way of not prepending a 0 when the score is less then 10
-    #            if data_to_send == 0 and (count == 1 or count == 5):
-    #                GPIO.output(DATAIN, False)
-    #            else:    
-    #            #send data
-    #                GPIO.output(DATAIN, False if i == "0" else True)
-    #                
-    #            #pulse clock line
-    #            sleep(0.001)
-    #            GPIO.output(CLOCK, True)
-    #            sleep(0.001)
-    #            GPIO.output(CLOCK, False)
-    #            sleep(0.001)
-    #        print("done")
-    #    count = count + 1
-    #    sleep(0.001)
-        
     #set Latch high to finish data transfer
     GPIO.output(LATCH, True)
 
+
+def print_to_leds_chained(board_data):
+    #Order of Chips
+    
+    #1 - Away Score One's
+    #2 - Away Score Ten's
+    #3 - Counts (Strikes - Outs - Balls)
+    #4 - Inning
+    #5 - Home Score One's
+    #6 - Home Score Ten's
+    
+    ##### Output wiring for Counts:
+    ##### Strikes: 1,2
+    ##### Outs: 3,4
+    ##### Balls: 5,6,7
+    
+    # Data has to be sent backwards (6->1)
+    
+    #Extract home score
+    ht, ho = divmod(int(board_data["home"]), 10)
+
+    #extract away score
+    at, ao = divmod(int(board_data["away"]), 10)
+    
+    inning = int(board_data["inning"])
+    
+    #build Binary string for count
+    count_string = ""
+    
+    #Formula X^2-x+1 will appropriately translate the integer to the needed binary value. But I might forget how that worked!
+    #for i in [ board_data["balls"], board_data["outs"], board_data["strikes"]]:
+    #    count_string = count_string + '{0:03b}'.format(((i*i)-i)+1)
+    
+    if int(board_data["strikes"]) == 0:
+        count_string = "00"
+    elif int(board_data["strikes"]) == 1:
+        count_string = "01"
+    elif int(board_data["strikes"]) == 2:
+        count_string = "11"
+        
+    if int(board_data["outs"]) == 0:
+        count_string = "00" + count_string
+    elif int(board_data["outs"]) == 1:
+        count_string = "01" + count_string
+    elif int(board_data["outs"]) == 2:
+        count_string = "11" + count_string
+        
+    if int(board_data["balls"]) == 0:
+        count_string = "0000" + count_string
+    elif int(board_data["balls"]) == 1:
+        count_string = "0001" + count_string
+    elif int(board_data["balls"]) == 2:
+        count_string = "0011" + count_string
+    elif int(board_data["balls"]) == 3:
+        count_string = "0111" + count_string
+        
+    #set Latch low to start sending data
+    GPIO.output(LATCH, False)
+
+    #Send the score data in order
+    count = 1
+    for data_to_send in [ ht, ho, inning, count_string, at, ao]:
+        
+    	
+        if count == 4:
+                #Send the count data first (its last) - since it doesnt leverage the lookup
+            for i in count_string:
+                #send data
+                GPIO.output(DATAIN, False if i == "0" else True)
+                #pulse clock line
+                sleep(0.001)
+                GPIO.output(CLOCK, True)
+                sleep(0.001)
+                GPIO.output(CLOCK, False)
+                sleep(0.001)
+            print("done")
+        else:
+            for i in numbers[data_to_send]:
+                #Hacky way of not prepending a 0 when the score is less then 10
+                if data_to_send == 0 and (count == 1 or count == 5):
+                    GPIO.output(DATAIN, False)
+                else:    
+                #send data
+                    GPIO.output(DATAIN, False if i == "0" else True)
+                    
+                #pulse clock line
+                sleep(0.001)
+                GPIO.output(CLOCK, True)
+                sleep(0.001)
+                GPIO.output(CLOCK, False)
+                sleep(0.001)
+            print("done")
+        count = count + 1
+        sleep(0.001)
+    
+    #set Latch high to finish data transfer
+    GPIO.output(LATCH, True)
 
 app = Flask(__name__)
 
@@ -209,7 +269,8 @@ def handle_data():
 def update_board(board_data):
     global BOARD
     BOARD=board_data
-    print_to_leds(board_data)
+    #print_to_leds(board_data)
+    print_to_leds_chained(board_data)
     with open(FILEPATH, 'w') as f:
         json.dump(board_data, f)
     pprint(board_data)
