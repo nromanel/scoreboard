@@ -11,6 +11,7 @@ GPIO.setmode(GPIO.BOARD)
 # Setup RPi TPIC6B595N
             # VCC 5V - Pin 2
 DATAIN = 37 # SERIN - Pin 3
+DATAHT = 35
             # Number Outputs - Pin 4-7
             # SRCLR - Pin 8 - Always High - Give 5v
             # OE - Pin 9 - Always Low - go to ground
@@ -21,12 +22,14 @@ CLOCK = 31  # SRCK - Pin 13
             # SEROUT - Pin 18
 
 GPIO.setup(DATAIN, GPIO.OUT)
+GPIO.setup(DATAHT, GPIO.OUT)
 GPIO.setup(CLOCK, GPIO.OUT)
 GPIO.setup(LATCH, GPIO.OUT)
 
 GPIO.output(LATCH, False)    # Latch is used to output the saved data
 GPIO.output(CLOCK, False)    # Used to shift the value of DATAIN to the register
 GPIO.output(DATAIN, False)   # Databit to be shifted into the register
+GPIO.output(DATAHT, False) 
 BOARD = {}
 FILEPATH = "/tmp/scoreboard"
 PORT = 5000
@@ -108,14 +111,11 @@ def print_to_leds(board_data):
     for i in numbers[ht]:
         print(i)
         #send data
-        GPIO.output(DATAIN, False if i == "0" else True)
+        GPIO.output(DATAHT, False if i == "0" else True)
         #pulse clock line
         GPIO.output(CLOCK, True)
-        sleep(0.01)
         GPIO.output(CLOCK, False)
-    GPIO.output(LATCH, True)
-    return True
-
+    
         
     #Send the score data in order
     count = 1
@@ -147,7 +147,8 @@ def print_to_leds(board_data):
                 GPIO.output(CLOCK, False)
             print("done")
         count = count + 1
-   
+        sleep(0.001)
+        
     #set Latch high to finish data transfer
     GPIO.output(LATCH, True)
 
