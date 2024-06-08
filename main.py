@@ -114,8 +114,8 @@ def print_to_leds(board_data):
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
 
-    for i in range(0, 7):
-        
+    for i in range(0, 8):
+        pprint(i)
         if ht == 0:
             GPIO.output(DATA_HT, False)
         else:
