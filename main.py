@@ -56,8 +56,6 @@ numbers = [
 ]
 
 def print_to_leds(board_data):
-    print("Received Data:")
-    pprint(board_data)
     #Order of Chips
     
     
@@ -113,7 +111,6 @@ def print_to_leds(board_data):
     elif int(board_data["balls"]) == 3:
         count_string = "0111" + count_string
         
-    pprint(count_string)
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
 
