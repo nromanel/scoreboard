@@ -34,7 +34,7 @@ GPIO.output(CLOCK, False)    # Used to shift the value of DATAIN to the register
 GPIO.output(DATAIN, False)   # Databit to be shifted into the register
 GPIO.output(DATAHT, False) 
 BOARD = {}
-FILEPATH = "/tmp/scoreboard" + os.geteuid()
+FILEPATH = "/tmp/scoreboard" + str(os.geteuid())
 PORT = 5000
 
 numbers = [
