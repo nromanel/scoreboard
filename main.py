@@ -113,8 +113,11 @@ def print_to_leds(board_data):
         #send data
         GPIO.output(DATAHT, False if i == "0" else True)
         #pulse clock line
+        sleep(0.001)
         GPIO.output(CLOCK, True)
+        sleep(0.001)
         GPIO.output(CLOCK, False)
+        sleep(0.001)
     
         
     #Send the score data in order
@@ -129,8 +132,11 @@ def print_to_leds(board_data):
                 #send data
                 GPIO.output(DATAIN, False if i == "0" else True)
                 #pulse clock line
+                sleep(0.001)
                 GPIO.output(CLOCK, True)
+                sleep(0.001)
                 GPIO.output(CLOCK, False)
+                sleep(0.001)
             print("done")
         else:
             for i in numbers[data_to_send]:
@@ -143,8 +149,11 @@ def print_to_leds(board_data):
                     GPIO.output(DATAIN, False if i == "0" else True)
                     
                 #pulse clock line
+                sleep(0.001)
                 GPIO.output(CLOCK, True)
+                sleep(0.001)
                 GPIO.output(CLOCK, False)
+                sleep(0.001)
             print("done")
         count = count + 1
         sleep(0.001)
