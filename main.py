@@ -90,27 +90,27 @@ def print_to_leds(board_data):
     #for i in [ board_data["balls"], board_data["outs"], board_data["strikes"]]:
     #    count_string = count_string + '{0:03b}'.format(((i*i)-i)+1)
     
-    if board_data["strikes"] == 0:
+    if int(board_data["strikes"]) == 0:
         count_string = "00"
-    elif board_data["strikes"] == 1:
+    elif int(board_data["strikes"]) == 1:
         count_string = "01"
-    elif board_data["strikes"] == 2:
+    elif int(board_data["strikes"]) == 2:
         count_string = "11"
         
-    if board_data["outs"] == 0:
+    if int(board_data["outs"]) == 0:
         count_string = "00" + count_string
-    elif board_data["outs"] == 1:
+    elif int(board_data["outs"]) == 1:
         count_string = "01" + count_string
-    elif board_data["outs"] == 2:
+    elif int(board_data["outs"]) == 2:
         count_string = "11" + count_string
         
-    if board_data["balls"] == 0:
+    if int(board_data["balls"]) == 0:
         count_string = "0000" + count_string
-    elif board_data["balls"] == 1:
+    elif int(board_data["balls"]) == 1:
         count_string = "0001" + count_string
-    elif board_data["balls"] == 2:
+    elif int(board_data["balls"]) == 2:
         count_string = "0011" + count_string
-    elif board_data["balls"] == 3:
+    elif int(board_data["balls"]) == 3:
         count_string = "0111" + count_string
         
     pprint(count_string)
