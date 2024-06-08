@@ -235,6 +235,7 @@ if __name__ == "__main__":
                     "balls" : 0 }
     
     #Setup the scoreboard
+    print("Setting Up The Board")
     update_board(BOARD)       
     
     #If running as root run it on port 80
