@@ -29,7 +29,7 @@ CLOCK = 31  # SRCK - Pin 13
             # Number Outputs - Pin 14-17
             # SEROUT - Pin 18
 
-for i in [ DATA_IN, DATA_HT, DATA_HO, DATA_INNING, DATA_COUNT, DATA_AT, DATA_AO]:
+for i in [ DATAIN, DATA_HT, DATA_HO, DATA_INNING, DATA_COUNT, DATA_AT, DATA_AO]:
     GPIO.setup(i, GPIO.OUT)
     GPIO.output(i, False)
     
