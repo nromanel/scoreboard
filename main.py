@@ -10,11 +10,15 @@ import os
 GPIO.setmode(GPIO.BOARD)
 # Setup RPi TPIC6B595N
 
-DATAHT = 15
-LATCHHT = 13
-CLOCKHT = 11
+DATA_HT = 15
+DATA_HO = 13
+DATA_INNING = 11
+DATA_COUNT = 7
+DATA_AT = 5
+DATA_AO = 3
+
             # VCC 5V - Pin 2
-DATAIN = 37 # SERIN - Pin 3
+#DATAIN = 37 # SERIN - Pin 3
             # Number Outputs - Pin 4-7
             # SRCLR - Pin 8 - Always High - Give 5v
             # OE - Pin 9 - Always Low - go to ground
@@ -24,19 +28,15 @@ CLOCK = 31  # SRCK - Pin 13
             # Number Outputs - Pin 14-17
             # SEROUT - Pin 18
 
-GPIO.setup(DATAIN, GPIO.OUT)
-GPIO.setup(DATAHT, GPIO.OUT)
+for i in [ DATA_HT, DATA_HO, DATA_INNING, DATA_COUNT, DATA_AT, DATA_AO]:
+    GPIO.setup(i, GPIO.OUT)
+    GPIO.output(i, False)
+    
 GPIO.setup(CLOCK, GPIO.OUT)
 GPIO.setup(LATCH, GPIO.OUT)
-GPIO.setup(CLOCKHT, GPIO.OUT)
-GPIO.setup(LATCHHT, GPIO.OUT)
 
 GPIO.output(LATCH, False)    # Latch is used to output the saved data
 GPIO.output(CLOCK, False)    # Used to shift the value of DATAIN to the register
-GPIO.output(DATAIN, False)   # Databit to be shifted into the register
-GPIO.output(DATAHT, False) 
-GPIO.output(LATCHHT, False)    # Latch is used to output the saved data
-GPIO.output(CLOCKHT, False)  
 
 BOARD = {}
 FILEPATH = "/tmp/scoreboard" + str(os.geteuid())
@@ -115,58 +115,69 @@ def print_to_leds(board_data):
 
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
-    GPIO.output(LATCHHT, False)
-    
-    for i in numbers[ht]:
-        print(i)
-        #send data
-        GPIO.output(DATAHT, False if i == "0" else True)
-        #pulse clock line
-        sleep(0.001)
-        GPIO.output(CLOCKHT, True)
-        sleep(0.001)
-        GPIO.output(CLOCKHT, False)
-        sleep(0.001)
-    
-    GPIO.output(LATCHHT, True)
-     
-    #Send the score data in order
-    count = 1
-    for data_to_send in [ ht, ho, inning, count_string, at, ao]:
+
+    for i in range(0, 7):
         
-    	
-        if count == 4:
-                #Send the count data first (its last) - since it doesnt leverage the lookup
-            for i in count_string:
-                print(i)
-                #send data
-                GPIO.output(DATAIN, False if i == "0" else True)
-                #pulse clock line
-                sleep(0.001)
-                GPIO.output(CLOCK, True)
-                sleep(0.001)
-                GPIO.output(CLOCK, False)
-                sleep(0.001)
-            print("done")
+        if ht == 0:
+            GPIO.output(DATA_HT, False)
         else:
-            for i in numbers[data_to_send]:
-                print(i)
-                #Hacky way of not prepending a 0 when the score is less then 10
-                if data_to_send == 0 and (count == 1 or count == 5):
-                    GPIO.output(DATAIN, False)
-                else:    
-                #send data
-                    GPIO.output(DATAIN, False if i == "0" else True)
-                    
-                #pulse clock line
-                sleep(0.001)
-                GPIO.output(CLOCK, True)
-                sleep(0.001)
-                GPIO.output(CLOCK, False)
-                sleep(0.001)
-            print("done")
-        count = count + 1
+            GPIO.output(DATA_HT, False if str(numbers[ht])[i] == "0" else True)
+        
+        GPIO.output(DATA_HO, False if str(numbers[ho])[i] == "0" else True)
+        GPIO.output(DATA_INNING, False if str(numbers[inning])[i] == "0" else True)
+        GPIO.output(DATA_COUNT, False if count_string[i] == "0" else True)
+        
+        if at == 0:
+            GPIO.output(DATA_AT, False)
+        else:
+            GPIO.output(DATA_AT, False if str(numbers[at])[i] == "0" else True)
+            
+        GPIO.output(DATA_AO, False if str(numbers[ao])[i] == "0" else True)
+
+        
         sleep(0.001)
+        GPIO.output(CLOCK, True)
+        sleep(0.001)
+        GPIO.output(CLOCK, False)
+        sleep(0.001)
+
+    #Send the score data in order
+    #count = 1
+    #for data_to_send in [ ht, ho, inning, count_string, at, ao]:
+    #    
+    #	
+    #    if count == 4:
+    #            #Send the count data first (its last) - since it doesnt leverage the lookup
+    #        for i in count_string:
+    #            print(i)
+    #            #send data
+    #            GPIO.output(DATAIN, False if i == "0" else True)
+    #            #pulse clock line
+    #            sleep(0.001)
+    #            GPIO.output(CLOCK, True)
+    #            sleep(0.001)
+    #            GPIO.output(CLOCK, False)
+    #            sleep(0.001)
+    #        print("done")
+    #    else:
+    #        for i in numbers[data_to_send]:
+    #            print(i)
+    #            #Hacky way of not prepending a 0 when the score is less then 10
+    #            if data_to_send == 0 and (count == 1 or count == 5):
+    #                GPIO.output(DATAIN, False)
+    #            else:    
+    #            #send data
+    #                GPIO.output(DATAIN, False if i == "0" else True)
+    #                
+    #            #pulse clock line
+    #            sleep(0.001)
+    #            GPIO.output(CLOCK, True)
+    #            sleep(0.001)
+    #            GPIO.output(CLOCK, False)
+    #            sleep(0.001)
+    #        print("done")
+    #    count = count + 1
+    #    sleep(0.001)
         
     #set Latch high to finish data transfer
     GPIO.output(LATCH, True)
