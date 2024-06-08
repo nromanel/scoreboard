@@ -148,7 +148,6 @@ def print_to_leds_chained(board_data):
                 sleep(0.001)
                 GPIO.output(CLOCK, False)
                 sleep(0.001)
-            print("done")
         else:
             for i in numbers[data_to_send]:
                 #Hacky way of not prepending a 0 when the score is less then 10
@@ -164,7 +163,6 @@ def print_to_leds_chained(board_data):
                 sleep(0.001)
                 GPIO.output(CLOCK, False)
                 sleep(0.001)
-            print("done")
         count = count + 1
         sleep(0.001)
     
