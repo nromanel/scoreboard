@@ -112,7 +112,7 @@ def print_to_leds(board_data):
     elif board_data["balls"] == 3:
         count_string = "0111" + count_string
         
-    print(count_string)
+    pprint(count_string)
     #set Latch low to start sending data
     GPIO.output(LATCH, False)
 
