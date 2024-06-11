@@ -137,7 +137,7 @@ def print_to_leds_chained(board_data):
     for data_to_send in [ ht, ho, count_string, inning, at, ao]:
         
     	
-        if count == 4:
+        if count == 3:
                 #Send the count data first (its last) - since it doesnt leverage the lookup
             for i in count_string:
                 #send data
