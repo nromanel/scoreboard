@@ -107,8 +107,8 @@ def print_to_leds_chained(board_data):
     
     #1 - Away Score One's
     #2 - Away Score Ten's
-    #3 - Counts (Strikes - Outs - Balls)
-    #4 - Inning
+    #3 - Inning
+    #4 - Counts (Strikes - Outs - Balls)
     #5 - Home Score One's
     #6 - Home Score Ten's
     
@@ -134,7 +134,7 @@ def print_to_leds_chained(board_data):
 
     #Send the score data in order
     count = 1
-    for data_to_send in [ ht, ho, inning, count_string, at, ao]:
+    for data_to_send in [ ht, ho, count_string, inning, at, ao]:
         
     	
         if count == 4:
