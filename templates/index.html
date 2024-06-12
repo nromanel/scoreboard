@@ -125,7 +125,7 @@
                                 $('input[name=outs]').val(response["outs"]);
                                 $('input[name=balls]').val(response["balls"]); 
                             },
-                            failure: function (response) {
+                            error: function (response) {
                                 console.log("FAILED TO RETRIEVE DATA");
                                 $(".alert-box").text("Unable to retrieve Scoreboard Data");
                                 $(".alert-box").fadeTo(2000, 500).slideUp(500, function() {
@@ -230,7 +230,7 @@
                                                 console.log("Update Succeeeded!")
                                             }
                                         },
-                                        failure: function (response) {
+                                        error: function (response) {
                                             console.log("Unable to Update Board Data")
                                             console.log(response)
                                              $(".alert-box").text("Unable to Update Data");
