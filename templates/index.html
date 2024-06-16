@@ -34,9 +34,9 @@
 
                               <div class="col">
                             <div class="input-group justify-content-center">
-                                <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm " data-field="inning">
+                                <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm btn-clickable" data-field="inning">
                                 <input type="text" step="1" max="9" value="1" name="inning" class="border-0 text-center w-25 input-lg" readonly>
-                                <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm " data-field="inning">
+                                <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm btn-clickable" data-field="inning">
                              </div>
                              <p>Inning</p>
                     </div>
@@ -44,18 +44,18 @@
             <div class="row">
               <div class="col">
                 <div class="input-group justify-content-center">
-                    <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm " data-field="home">
+                    <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm btn-clickable" data-field="home">
                     <input type="text" step="1" max="99" value="0" name="home" class="border-0 text-center w-25 input-lg" readonly>
-                    <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm " data-field="home">
+                    <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm btn-clickable" data-field="home">
                  </div>
                 <p>Home</p>
               </div>
 
               <div class="col">
                 <div class="input-group justify-content-center">
-                    <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm " data-field="away">
+                    <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm btn-clickable" data-field="away">
                     <input type="text" step="1" max="99" value="0" name="away" class="border-0 text-center w-25 input-lg" readonly>
-                    <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm " data-field="away">
+                    <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm btn-clickable" data-field="away">
                  </div>
                 <p>Away</p>
               </div>
@@ -64,18 +64,18 @@
                 <div class="col">
                     <a href="#"><span class="reset-count badge bg-secondary">Reset</span></a>
                     <div class="input-group justify-content-center">
-                        <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm " data-field="outs">
+                        <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm btn-clickable" data-field="outs">
                         <input type="text" step="1" max="2" value="0" name="outs" class="border-0 text-center w-25 input-lg" readonly>
-                        <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm " data-field="outs">
+                        <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm btn-clickable" data-field="outs">
                      </div>
                     <div>Outs</div>
                 </div>
                 <div class="col">
                     <a href="#"><span class="reset-count badge bg-secondary">Reset</span></a>
                     <div class="input-group justify-content-center">
-                        <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm " data-field="strikes">
+                        <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm btn-clickable" data-field="strikes">
                         <input type="text" step="1" max="2" value="0" name="strikes" class="border-0 text-center w-25 input-lg" readonly>
-                        <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm " data-field="strikes">
+                        <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm btn-clickable" data-field="strikes">
                      </div>
                     <div>Strikes</div>
                 </div>
@@ -84,9 +84,9 @@
                 <div class="col">
                     <a href="#"><span class="reset-count badge bg-secondary">Reset</span></a>
                     <div class="input-group justify-content-center">
-                        <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm " data-field="balls">
+                        <input type="button" value="-" class="button-minus border rounded-circle icon-shape icon-sm btn-clickable" data-field="balls">
                         <input type="text" step="1" max="3" value="0" name="balls" class="border-0 text-center w-25 input-lg" readonly>
-                        <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm " data-field="balls">
+                        <input type="button" value="+" class="button-plus border rounded-circle icon-shape icon-sm btn-clickable" data-field="balls">
                      </div>
                     <div>Balls</div>
                     <a href="#"><span class="reset-full-count badge bg-info">Reset Count</span></a>
@@ -94,9 +94,9 @@
               </div>
               <div class="row mt-4">
                 <div class="col">
-                    <button type="button" class="btn btn-sm btn-secondary btn-sync">Sync</button>
+                    <button type="button" class="btn btn-sm btn-secondary btn-sync btn-clickable">Sync</button>
                     &nbsp;
-                    <button type="button" class="btn btn-sm btn-danger btn-reset" >Reset</button>
+                    <button type="button" class="btn btn-sm btn-danger btn-reset btn-clickable" >Reset</button>
                 </div>
               </div>
 
@@ -157,6 +157,12 @@
                                 parent.find('input[name=' + fieldName + ']').val(0);
                             }
                             
+                            if(fieldName == 'inning') {
+                                $('input[name=strikes]').val(0);
+                                $('input[name=outs]').val(0);
+                                $('input[name=balls]').val(0);
+                            }
+                            
                             syncBoard()
                         }
 
@@ -172,6 +178,13 @@
                             } else {
                                 parent.find('input[name=' + fieldName + ']').val(0);
                             }
+                            
+                            if(fieldName == 'inning') {
+                                $('input[name=strikes]').val(0);
+                                $('input[name=outs]').val(0);
+                                $('input[name=balls]').val(0);
+                            }
+                            
                             syncBoard()
                         }
 
@@ -200,6 +213,14 @@
                             $('input[name=outs]').val(0);
                             $('input[name=balls]').val(0);
                             syncBoard()
+                        }
+                        
+                        function disableClick()
+                        {
+                            $('.btn-clickable').css('pointer-events','none');
+                            setTimeout(() => {
+                              $('.btn-clickable').css('pointer-events','auto');
+                            }, "600");
                         }
 
                         function syncBoard() {
@@ -245,34 +266,32 @@
                         }
 
                         $('.input-group').on('click', '.button-plus', function(e) {
+                            disableClick();
                             incrementValue(e);
-                            var fieldName = $(e.target).data('field');
-                            if(fieldName == 'inning') {
-                                resetCount()
-                            }
                         });
 
                         $('.input-group').on('click', '.button-minus', function(e) {
+                            disableClick();
                             decrementValue(e);
-                            var fieldName = $(e.target).data('field');
-                            if(fieldName == 'inning') {
-                                resetCount()
-                            }
                         });
 
                         $('.reset-count').on('click', function(e) {
+                            disableClick();
                             resetValue(e);
                         });
 
                         $('.reset-full-count').on('click', function(e) {
+                            disableClick();
                             resetCount()
                         });
 
                         $('.btn-reset').on('click', function(e) {
+                            disableClick();
                             resetAll()
                         });
 
                         $('.btn-sync').on('click', function(e) {
+                            disableClick();
                             syncBoard()
                         });
             });
